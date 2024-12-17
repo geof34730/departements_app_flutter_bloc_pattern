@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:departement_francais/models/DepartementModel.dart';
 import 'package:flutter/material.dart';
 import '../../bloc/field_search_bloc.dart';
@@ -13,12 +15,23 @@ final  dataJsonObject =  DataJson();
 class _SearchDropDownState extends State<SearchDropDown> {
   String selectedValue = "";
   late Future<List<List<DropdownMenuItem<String>>>>? dataDropDown;
+  late StreamSubscription<DepartementModel> _subscription;
 
   @override
   void initState() {
     super.initState();
     dataDropDown = fetchDropdownItems();
-    blocDepartement.selectDepartement(selectedValue);
+
+    _subscription = blocDepartement.stream.listen((value) {
+      setState(() {
+        selectedValue = value.numDep;
+      });
+    });
+  }
+
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
   }
 
   Future<List<List<DropdownMenuItem<String>>>> fetchDropdownItems() async {
@@ -53,7 +66,7 @@ class _SearchDropDownState extends State<SearchDropDown> {
           //return const Text('Aucun élément trouvé');
           return const CircularProgressIndicator();
         } else {
-          print(snapshot.data);
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -66,8 +79,8 @@ class _SearchDropDownState extends State<SearchDropDown> {
                     items: snapshot.data?[0],
                     onChanged: (String? value) {
                       setState(() {
-                        selectedValue = value!;
-                        blocDepartement.selectDepartement(value);
+                      //  selectedValue = value!;
+                        blocDepartement.selectDepartement(value!);
                       });
                     },
                   ),

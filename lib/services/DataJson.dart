@@ -6,7 +6,12 @@ import '../models/DepartementModel.dart';
 
 class DataJson {
   Future<dynamic> loadJsonAsset() async {
-    final String jsonString = await rootBundle.loadString('json/departement-region.json');
+
+    final String jsonString = await rootBundle.loadString('assets/json/departement-region.json');
+    //final List<dynamic> dataAllVerbs = await json.decode(AllVerbsReponse);
+
+
+   // final String jsonString = await rootBundle.loadString('json/departement-region.json');
 
     final data = jsonDecode(jsonString);
     return data;

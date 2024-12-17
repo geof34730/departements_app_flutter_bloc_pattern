@@ -37,21 +37,33 @@ class MyHomePage extends StatelessWidget {
               stream: blocDepartement.stream.distinct(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                 // return const Text('Choissisez un departement');
                   return const CircularProgressIndicator();
                 } else if (snapshot.hasError) {
                   return Text('Erreur: ${snapshot.error}');
                 } else if (!snapshot.hasData) {
-                  return const Text('Choissisez un departement');
+                  return const Divider();
                 } else {
                  if(snapshot.data?.numDep == ""){
-                   return const Text('Choissisez un departement');
+                   return const  Divider();
                   }
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Text('resultat: ${snapshot.data}'),
+                        Divider(),
+                        Text('${snapshot.data?.numDep} - ${snapshot.data?.depName} (région: ${snapshot.data!.regionName})'),
+                        Image(image: AssetImage('assets/images/cartes/${snapshot.data?.numDep}.png'), height: 200, width: 200),
+                        Text(snapshot.data!.description),
+                        TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateProperty.all<Color>(Colors.blue),
+                          ),
+                          onPressed: () {
+                            print('57');
+                            blocDepartement.selectDepartement("57");
+                          },
+                          child: Text('57'),
+                        )
                       ],
                     ),
                   );

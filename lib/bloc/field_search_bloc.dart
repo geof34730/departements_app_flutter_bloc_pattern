@@ -5,13 +5,13 @@ import 'package:departement_francais/models/DepartementModel.dart';
 
 import '../services/DataJson.dart';
 import 'bloc.dart';
-final blocDepartement = FieldSearchBloc();
+
 class FieldSearchBloc extends Bloc {
   //valeur par default du counter
   String search ="";
 
   //creation du stream controller
-  final StreamController<DepartementModel> _streamController = StreamController<DepartementModel>();
+  final StreamController<DepartementModel> _streamController = StreamController<DepartementModel>.broadcast();
 
   //Entrée
   //envoyer une valeur au stream controller
@@ -32,5 +32,5 @@ class FieldSearchBloc extends Bloc {
     //ferme le stream
     _streamController.close();
   }
-
 }
+final blocDepartement = FieldSearchBloc();
