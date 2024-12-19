@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 enum ColorLabel {
-  blue('Blue', Colors.blue);
-  const ColorLabel(this.label, this.color);
-  final String label;
+  FrenchBlue(Color(0xFF000091));
+  const ColorLabel( this.color);
+
   final Color color;
 }
 
@@ -11,7 +11,7 @@ ThemeData getThemeData(){
   return ThemeData(
     useMaterial3:true,
     appBarTheme:  AppBarTheme(
-      backgroundColor: ColorLabel.blue.color,
+      backgroundColor: ColorLabel.FrenchBlue.color,
       iconTheme: IconThemeData(color: Colors.white),
       actionsIconTheme: IconThemeData(color: Colors.white),
       titleSpacing: 0.0,

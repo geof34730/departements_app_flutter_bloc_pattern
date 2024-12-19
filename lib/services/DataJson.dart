@@ -6,13 +6,7 @@ import '../models/DepartementModel.dart';
 
 class DataJson {
   Future<dynamic> loadJsonAsset() async {
-
     final String jsonString = await rootBundle.loadString('assets/json/departement-region.json');
-    //final List<dynamic> dataAllVerbs = await json.decode(AllVerbsReponse);
-
-
-   // final String jsonString = await rootBundle.loadString('json/departement-region.json');
-
     final data = jsonDecode(jsonString);
     return data;
   }
@@ -35,4 +29,34 @@ class DataJson {
     }
     return DepartementModel(numDep: "", depName: "", regionName: "", description: "");
   }
+
+
+  Future<DepartementModel> nextDepartement(String numDep) async {
+    final data = await this.loadJsonAsset();
+    for (var i = 0; i < data.length; i++) {
+      if(data[i]["num_dep"] == numDep){
+        if(i == data.length - 1){
+          return DepartementModel.fromJson(data[0]);
+        }else{
+          return DepartementModel.fromJson(data[i + 1]);
+        }
+      }
+    }
+    return DepartementModel(numDep: "", depName: "", regionName: "", description: "");
+  }
+
+  Future<DepartementModel> previousDepartement(String numDep) async {
+    final data = await this.loadJsonAsset();
+    for (var i = 0; i < data.length; i++) {
+      if(data[i]["num_dep"] == numDep){
+        if(i == 0){
+          return DepartementModel.fromJson(data[data.length - 1]);
+        }else{
+          return DepartementModel.fromJson(data[i - 1]);
+        }
+      }
+    }
+    return DepartementModel(numDep: "", depName: "", regionName: "", description: "");
+  }
 }
+//DataJson dataJson = DataJson();
